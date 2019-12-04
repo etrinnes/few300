@@ -1,0 +1,51 @@
+<form [formGroup]="form"
+      (ngSubmit)="submit(focusme)">
+  <div class="form-group">
+    <label for="name">Name</label>
+    <input class="form-control"
+           #focusme
+           formControlName="name"
+           id="name">
+    <div class="alert alert-danger"
+         *ngIf="name.invalid && (name.dirty || name.touched)">
+      <div *ngIf="name.errors.minlength">
+        That isn't long enough. You need {{name.errors.minLength.requiredLength}}
+      </div>
+      <div *ngIf="name.errors.required">
+        Name is required.
+      </div>
+      {{name.errors | json}}
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="email">Email</label>
+    <input type="email"
+           formControlName="email"
+           class="form-control"
+           id="email">
+    <div class="alert alert-danger"
+         *ngIf="email.invalid && (email.dirty || email.touched)">
+      {{email.errors | json}}
+    </div>
+  </div>
+  <div class="form-control form-check"
+       formArrayName="holidays"
+       *ngFor="let holiday of holidaysArray.controls; let i = index">
+    <input type="checkbox"
+           [formControlName]="i"
+           class="form-check-input">
+    <label class="form-check-inline">{{holidays[i].name}} {{holidays[i].date | date:'shortDate'}}</label>
+    <div class="alert alert-danger"
+         *ngIf="holidaysArray.invalid && (holidaysArray.dirty || holidaysArray.touched)">
+      <p *ngIf="holidaysArray.errors.required">
+        You have to pick at least {{holidaysArray.errors.needed}}
+      </p>
+    </div>
+  </div>
+  <input type="submit"
+         [disabled]="form.invalid"
+         class="btn btn-primary"
+         value="Add this person">
+</form>
+
+<pre class="debug">{{form.status}}</pre>
