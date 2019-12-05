@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { AppState } from './reducers';
+import { AppState, selectErrorMessage, selectHasError } from './reducers';
 import { applicationStarted } from './actions/app.actions';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +12,15 @@ import { applicationStarted } from './actions/app.actions';
 export class AppComponent {
   title = 'few300';
 
-  constructor(store: Store<AppState>) {
+  hasError$: Observable<boolean>;
+  errorMessage$: Observable<string>;
+
+  constructor(private store: Store<AppState>) {
     store.dispatch(applicationStarted());
+  }
+
+  ngOnInit() {
+    this.hasError$ = this.store.select(selectHasError);
+    this.errorMessage$ = this.store.select(selectErrorMessage);
   }
 }

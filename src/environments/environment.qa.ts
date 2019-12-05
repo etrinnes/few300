@@ -2,5 +2,5 @@ import { Environment } from './model';
 
 export const environment: Environment = {
   production: true,
-  rootApiUrl: 'http://api.prog1.com/'
+  rootApiUrl: 'some qa url'
 };

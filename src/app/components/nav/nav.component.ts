@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { AppState, selectUserIsAdmin } from 'src/app/reducers';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-nav',
@@ -7,9 +10,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavComponent implements OnInit {
 
-  constructor() { }
+  isAdmin$: Observable<boolean>;
+  constructor(private store: Store<AppState>) { }
 
   ngOnInit() {
+    this.isAdmin$ = this.store.select(selectUserIsAdmin);
   }
 
 }

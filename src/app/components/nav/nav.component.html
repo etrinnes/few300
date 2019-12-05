@@ -6,7 +6,13 @@
   </li>
   <li class="nav-item">
     <a class="nav-link"
-       [routerLink]="['gift-giving']"
-       [routerLinkActive]="['active']">Gift Giving</a>
+       [routerLink]="['gift-giving', 'dashboard']"
+       [routerLinkActive]="['active', 'special']">Gift Giving</a>
+  </li>
+  <li class="nav-item"
+      *ngIf="isAdmin$ | async">
+    <a class="nav-link"
+       [routerLink]="['administration']"
+       [routerLinkActive]="['active', 'special']">Administration</a>
   </li>
 </ul>
