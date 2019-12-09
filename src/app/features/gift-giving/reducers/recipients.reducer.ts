@@ -19,6 +19,7 @@ const initialState = adapter.getInitialState();
 
 const reducerFunction = createReducer(
   initialState,
+  on(actions.loadRecipientsSucceeded, (state, action) => adapter.addAll(action.payload, state)),
   on(actions.recipientAdded, (state, action) => adapter.addOne(action.payload, state))
 );
 
