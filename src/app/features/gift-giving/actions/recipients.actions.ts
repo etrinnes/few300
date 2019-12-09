@@ -13,3 +13,7 @@ export const recipientAdded = createAction(
     }
   })
 );
+
+export const loadRecipients = createAction(
+  '[gift giving] load recipients'
+);

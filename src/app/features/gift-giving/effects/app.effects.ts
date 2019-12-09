@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import * as appActions from '../../../actions/app.actions';
 import * as holidayActions from '../actions/holidays.actions';
-import { map } from 'rxjs/operators';
+import * as recipientActions from '../actions/recipients.actions';
+import { map, switchMap } from 'rxjs/operators';
 
 @Injectable()
 export class AppEffects {
@@ -19,7 +20,10 @@ export class AppEffects {
   loadDataOnAppStart$ = createEffect(() =>
     this.actions$.pipe(
       ofType(appActions.applicationStarted),
-      map(() => holidayActions.loadHolidays()) // turns action of one type into another type
+      switchMap(() => [
+        holidayActions.loadHolidays(),
+        recipientActions.loadRecipients()
+      ])
     )
   );
   constructor(private actions$: Actions) { }
