@@ -1,1 +1,11 @@
-<p>dashboard works!</p>
+<h3>Holiday Dashboard!!!</h3>
+<div class="card"
+     *ngFor="let model of model$ | async">
+  <div class="card-body">
+    <h5 class="card-title">{{model.holiday}}</h5>
+    <ul class="list-group">
+      <li *ngFor="let recipient of model.recipients"
+          class="list-group-item">{{recipient.name}}</li>
+    </ul>
+  </div>
+</div>

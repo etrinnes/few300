@@ -7,6 +7,7 @@ import * as fromRecipients from './recipients.reducer';
 import * as fromRecipientModels from '../models/recipients';
 import * as moment from 'moment';
 import { ActionReducerMap, createFeatureSelector, createSelector } from '@ngrx/store';
+import { DashboardModel } from '../models';
 
 
 export interface GiftGivingState {
@@ -149,10 +150,33 @@ export const selectRecipientModel = createSelector(
   }
 );
 
+
+export const selectDashboardModel = createSelector(
+  selectHolidayModelRaw,
+  selectRecipientModel,
+  (holiday, recipients) => {
+    const sortedHolidays = [...holiday.holidays.filter(h => new Date(h.date) >= new Date()).sort((lhs, rhs) => {
+      if (new Date(lhs.date) > new Date(rhs.date)) {
+        return 1;
+      }
+      if (new Date(lhs.date) < new Date(rhs.date)) {
+        return -1;
+      }
+      return 0;
+    })];
+    return sortedHolidays.map(h => ({
+      holidayId: h.id,
+      holiday: h.name,
+      recipients: recipients.filter(recipient => recipient.holidays)
+        .map(thing => ({ id: thing.id, name: thing.name }))
+    } as DashboardModel));
+  }
+);
+
 function makeHolidayThing(h: fromHolidays.HolidayEntity) {
   return {
     id: h.id,
-    description: h.name + ' (' + moment(h.date).format('MMMM Do, YYYY') + ')'
+    description: h.name
   };
 }
 

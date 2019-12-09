@@ -34,7 +34,7 @@ export class RecipientsEffects {
         switchMap(() => this.client.get<GetRecipientsResponse>(`${environment.rootApiUrl}recipients`)
           .pipe(
             map(response => response.recipients),
-            map(blah => blah.map(thing => ({ id: thing.id, name: thing.name, selectedHolidayIds: thing.holidays } as RecipientsEntity))),
+            map(blah => blah.map(thing => ({ id: thing.id, name: thing.name, email: thing.email, selectedHolidayIds: thing.holidays } as RecipientsEntity))),
             map((recipients) => recipientsActions.loadRecipientsSucceeded({ payload: recipients }))
           )
         )
@@ -52,5 +52,6 @@ interface GetRecipientsResponse {
 interface RecipientThing {
   id: string;
   name: string;
+  email: string;
   holidays: string[];
 }
