@@ -15,6 +15,11 @@ export const recipientAdded = createAction(
   })
 );
 
+export const recipientAddedSuccessfully = createAction(
+  '[gift giving] recipient added successfully',
+  props<{ payload: RecipientsEntity, oldId: string }>()
+);
+
 export const loadRecipients = createAction(
   '[gift giving] load recipients'
 );
